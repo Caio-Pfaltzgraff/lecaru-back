@@ -1,5 +1,7 @@
 package com.caiopfaltzgraff.lecaru.domain.product;
 
+import com.caiopfaltzgraff.lecaru.domain.category.Category;
+import com.caiopfaltzgraff.lecaru.domain.subcategory.Subcategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +36,13 @@ public class Product {
 
     @Column(nullable = false, precision = 2)
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id", nullable = false)
+    private Subcategory subcategory;
 
 }

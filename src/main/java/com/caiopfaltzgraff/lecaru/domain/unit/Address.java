@@ -1,4 +1,4 @@
-package com.caiopfaltzgraff.lecaru.domain.units;
+package com.caiopfaltzgraff.lecaru.domain.unit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

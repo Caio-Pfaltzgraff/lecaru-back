@@ -1,4 +1,4 @@
-package com.caiopfaltzgraff.lecaru.domain.subcategories;
+package com.caiopfaltzgraff.lecaru.domain.subcategory;
 
 import com.caiopfaltzgraff.lecaru.domain.category.Category;
 import jakarta.persistence.*;
