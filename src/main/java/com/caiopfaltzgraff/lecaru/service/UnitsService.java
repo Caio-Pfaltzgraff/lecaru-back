@@ -4,7 +4,6 @@ import com.caiopfaltzgraff.lecaru.dto.api.ResponseApiIBGEDTO;
 import com.caiopfaltzgraff.lecaru.dto.api.StateFullNameAndFuDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.StatePageUnitsDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.UnitPageUnitsDTO;
-import com.caiopfaltzgraff.lecaru.dto.units.UnitsDataDTO;
 import com.caiopfaltzgraff.lecaru.repository.UnitRepository;
 import com.caiopfaltzgraff.lecaru.util.RequestApi;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class UnitsService {
 
     private final UnitRepository unitRepository;
 
-    public UnitsDataDTO getUnits() {
-        //buscar produtos
+    public List<StatePageUnitsDTO> getUnits() {
         var units = unitRepository.findAll();
         var states = new ArrayList<String>();
 
@@ -39,19 +37,18 @@ public class UnitsService {
                 throw new RuntimeException(e);
             }
         });
-        var data = new UnitsDataDTO();
-        data.setStates(new ArrayList<>());
+        var data = new ArrayList<StatePageUnitsDTO>();
 
         statesFullName.forEach(state -> {
             var dataState = new StatePageUnitsDTO();
             dataState.setUnits(new ArrayList<>());
             dataState.setFu(state.fu());
             dataState.setName(state.name());
-            data.getStates().add(dataState);
+            data.add(dataState);
         });
 
         units.forEach(unit -> {
-            data.getStates().forEach(state -> {
+            data.forEach(state -> {
                 if(unit.getAddress().getFu().equals(state.getFu())) {
                     state.getUnits().add(new UnitPageUnitsDTO(unit.getId(), unit.getName(), unit.getAddress().toFullAddresString(), unit.getTelephone()));
                 }

@@ -1,7 +1,6 @@
 package com.caiopfaltzgraff.lecaru.controller.users;
 
-import com.caiopfaltzgraff.lecaru.domain.unit.Unit;
-import com.caiopfaltzgraff.lecaru.dto.units.UnitsDataDTO;
+import com.caiopfaltzgraff.lecaru.dto.units.StatePageUnitsDTO;
 import com.caiopfaltzgraff.lecaru.service.UnitsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class UnitsController {
     private final UnitsService unitsService;
 
     @GetMapping
-    public ResponseEntity<UnitsDataDTO> getUnits() {
+    public ResponseEntity<List<StatePageUnitsDTO>> getUnits() {
         return ResponseEntity.ok(unitsService.getUnits());
     }
 
