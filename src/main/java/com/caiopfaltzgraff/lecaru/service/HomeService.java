@@ -32,7 +32,7 @@ public class HomeService {
         ).toList();
 
         var units = unitsList.subList(0, unitsList.size()).stream().map(
-                unit -> new UnitHomeDTO(unit.getId(), unit.getName(), unit.getAddress().getFullAddress())
+                unit -> new UnitHomeDTO(unit.getId(), unit.getName(), unit.getAddress().toFullAddresString())
         ).toList();
 
         return new HomeDataDTO(suggestions, units);

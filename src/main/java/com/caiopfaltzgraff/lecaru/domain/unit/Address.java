@@ -30,7 +30,7 @@ public class Address {
     @Column(nullable = false, length = 2)
     private String fu;
 
-    public String getFullAddress() {
+    public String toFullAddresString() {
         return street + ", " + number + " - " + neighborhood + ", " + city + " - " + fu + ", " + zipCode;
     }
 
