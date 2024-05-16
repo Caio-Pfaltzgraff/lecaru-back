@@ -1,15 +1,13 @@
 package com.caiopfaltzgraff.lecaru.service;
 
-import com.caiopfaltzgraff.lecaru.dto.api.ResponseApiIBGEDTO;
 import com.caiopfaltzgraff.lecaru.dto.api.StateFullNameAndFuDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.StatePageUnitsDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.UnitPageUnitsDTO;
 import com.caiopfaltzgraff.lecaru.repository.UnitRepository;
-import com.caiopfaltzgraff.lecaru.util.RequestApi;
+import com.caiopfaltzgraff.lecaru.util.BrazilStates;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +29,7 @@ public class UnitsService {
 
         List<StateFullNameAndFuDTO> statesFullName = new ArrayList<StateFullNameAndFuDTO>();
         states.forEach(state -> {
-            try {
-                statesFullName.add(getStateFullName(state));
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            statesFullName.add(getStateFullName(state));
         });
         var data = new ArrayList<StatePageUnitsDTO>();
 
@@ -58,10 +52,8 @@ public class UnitsService {
         return data;
     }
 
-    private StateFullNameAndFuDTO getStateFullName(String fu) throws IOException, InterruptedException {
-        String ibgeApiUrl = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + fu;
-        ResponseApiIBGEDTO response = new RequestApi().send(ibgeApiUrl, ResponseApiIBGEDTO.class);
-        return new StateFullNameAndFuDTO(response.nome(), response.sigla());
+    private StateFullNameAndFuDTO getStateFullName(String fu) {
+        return new StateFullNameAndFuDTO(BrazilStates.getStateFullName(fu.toUpperCase()), fu.toUpperCase());
     }
 
 }

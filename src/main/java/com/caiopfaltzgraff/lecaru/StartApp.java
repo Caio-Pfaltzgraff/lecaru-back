@@ -27,12 +27,12 @@ public class StartApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Categorias
-        Category carnes = categoryRepository.save(new Category(null, "Carnes"));
-        Category petiscos = categoryRepository.save(new Category(null, "Petiscos"));
-        Category massas = categoryRepository.save(new Category(null, "Massas"));
-        Category guarnicoes = categoryRepository.save(new Category(null, "Guarnições"));
-        Category bebidas = categoryRepository.save(new Category(null, "Bebidas"));
-        Category sobremesas = categoryRepository.save(new Category(null, "Sobremesas"));
+        Category carnes = categoryRepository.save(new Category(null, "Carnes", "/menu/meat.jpg"));
+        Category petiscos = categoryRepository.save(new Category(null, "Petiscos", "/menu/snacks.png"));
+        Category massas = categoryRepository.save(new Category(null, "Massas", "/menu/pastas.jpg"));
+        Category guarnicoes = categoryRepository.save(new Category(null, "Guarnições", "/menu/garnishes.png"));
+        Category bebidas = categoryRepository.save(new Category(null, "Bebidas", "/menu/drinks.png"));
+        Category sobremesas = categoryRepository.save(new Category(null, "Sobremesas", "/menu/desserts.png"));
 
         // Subcategorias
         Subcategory carnesBovinas = subcategoryRepository.save(new Subcategory(null, "Carnes Bovinas", carnes));
@@ -179,7 +179,7 @@ public class StartApp implements CommandLineRunner {
                 null,
                 new BigDecimal("10"),
                 bebidas,
-                refrigerantes
+                sucos
         ));
         productRepository.save(new Product(
                 null,
