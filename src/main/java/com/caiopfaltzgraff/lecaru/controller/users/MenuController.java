@@ -1,13 +1,12 @@
 package com.caiopfaltzgraff.lecaru.controller.users;
 
+import com.caiopfaltzgraff.lecaru.domain.product.Product;
 import com.caiopfaltzgraff.lecaru.dto.Menu.MenuData;
+import com.caiopfaltzgraff.lecaru.dto.Menu.MenuProductInfoDTO;
 import com.caiopfaltzgraff.lecaru.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/menu")
@@ -20,6 +19,21 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<MenuData> getMenuData() {
         return ResponseEntity.ok(menuService.getMenuData());
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<MenuProductInfoDTO> getProductById(@PathVariable String productId) {
+        var product = menuService.findByProductId(productId);
+        return ResponseEntity.ok(new MenuProductInfoDTO(
+                product.getName(),
+                product.getImage(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getServing(),
+                product.getWeight(),
+                product.getCategory().getName(),
+                product.getSubcategory().getName()
+        ));
     }
 
 }

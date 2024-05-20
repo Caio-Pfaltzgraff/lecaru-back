@@ -1,5 +1,6 @@
 package com.caiopfaltzgraff.lecaru.service;
 
+import com.caiopfaltzgraff.lecaru.domain.product.Product;
 import com.caiopfaltzgraff.lecaru.dto.Menu.MenuCategory;
 import com.caiopfaltzgraff.lecaru.dto.Menu.MenuData;
 import com.caiopfaltzgraff.lecaru.dto.Menu.MenuProduct;
@@ -52,6 +53,10 @@ public class MenuService {
 
         return new MenuData(products, categories, subcategories);
 
+    }
+
+    public Product findByProductId(String id) {
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
     }
 
 }
