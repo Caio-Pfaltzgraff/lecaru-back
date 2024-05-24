@@ -34,7 +34,7 @@ public class Product {
 
     private Integer serving;
 
-    @Column(nullable = false, precision = 2)
+    @Column(nullable = false)
     private BigDecimal price;
 
     @ManyToOne

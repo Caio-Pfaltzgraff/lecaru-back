@@ -163,7 +163,7 @@ public class StartApp implements CommandLineRunner {
                 null,
                 "Coca Cola Zero (lata)",
                 "",
-                "https://res.cloudinary.com/vuca-solution/image/upload/w_744,h_559,c_fill,q_auto,f_auto/v1648798236/storage.vucasolution.com.br/cabanero/arqs/produtos/h9gkqxmn1ri7xbk6zfrv.jpg",
+                "https://covabra.vtexassets.com/arquivos/ids/158183/15551.jpg?v=638095896783930000",
                 null,
                 null,
                 new BigDecimal("7"),
