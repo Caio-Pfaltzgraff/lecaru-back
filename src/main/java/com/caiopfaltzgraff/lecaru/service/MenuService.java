@@ -17,17 +17,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuService {
 
-    private final CategoryRepository categoryRepository;
-    private final SubcategoryRepository subcategoryRepository;
-    private final ProductRepository productRepository;
+    private final CategoryService categoryService;
+    private final SubcategoryService subcategoryService;
+    private final ProductService productService;
 
     public MenuData getMenuData() {
-        List<MenuCategory> categories = categoryRepository.findAll()
+        List<MenuCategory> categories = categoryService.findAll()
             .stream()
             .map(category -> new MenuCategory(category.getId(), category.getName(), category.getImage()))
             .toList();
 
-        var subcategories = subcategoryRepository.findAll()
+        var subcategories = subcategoryService.findAll()
             .stream()
             .map(
                 subcategory -> new MenuSubcategory(
@@ -36,7 +36,7 @@ public class MenuService {
             )
             .toList();
 
-        var products = productRepository.findAll()
+        var products = productService.findAll()
             .stream()
             .map(product -> new MenuProduct(
                 product.getId(),
@@ -56,7 +56,7 @@ public class MenuService {
     }
 
     public Product findByProductId(String id) {
-        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        return productService.findById(id);
     }
 
 }

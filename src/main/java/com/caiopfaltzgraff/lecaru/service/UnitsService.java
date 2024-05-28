@@ -9,6 +9,8 @@ import com.caiopfaltzgraff.lecaru.dto.units.UnitsSaveOrUpdateDTO;
 import com.caiopfaltzgraff.lecaru.repository.UnitRepository;
 import com.caiopfaltzgraff.lecaru.util.BrazilStates;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,18 +22,22 @@ public class UnitsService {
 
     private final UnitRepository unitRepository;
 
+    @Cacheable("units")
     public List<Unit> findAll() {
         return unitRepository.findAll();
     }
 
+    @Cacheable(value = "units", key = "#id")
     public Unit findById(String id) {
         return unitRepository.findById(id).orElseThrow(() -> new RuntimeException("Unit not found"));
     }
 
+    @CacheEvict(value = "units", allEntries = true)
     public Unit save(Unit unit) {
         return unitRepository.save(unit);
     }
 
+    @CacheEvict(value = "units", allEntries = true)
     public void update(String unitId, UnitsSaveOrUpdateDTO dto) {
         var unit = findById(unitId);
 
@@ -49,13 +55,15 @@ public class UnitsService {
         unitRepository.save(unit);
     }
 
+    @CacheEvict(value = "units", allEntries = true)
     public void deleteById(String id) {
         var unit = findById(id);
         unitRepository.delete(unit);
     }
 
+    @Cacheable("units")
     public List<StatePageUnitsDTO> getUnits() {
-        var units = unitRepository.findAll();
+        var units = findAll();
         var states = new ArrayList<String>();
 
         units.forEach(unit -> {
