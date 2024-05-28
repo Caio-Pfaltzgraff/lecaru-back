@@ -1,8 +1,11 @@
 package com.caiopfaltzgraff.lecaru.service;
 
+import com.caiopfaltzgraff.lecaru.domain.unit.Address;
+import com.caiopfaltzgraff.lecaru.domain.unit.Unit;
 import com.caiopfaltzgraff.lecaru.dto.api.StateFullNameAndFuDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.StatePageUnitsDTO;
 import com.caiopfaltzgraff.lecaru.dto.units.UnitPageUnitsDTO;
+import com.caiopfaltzgraff.lecaru.dto.units.UnitsSaveOrUpdateDTO;
 import com.caiopfaltzgraff.lecaru.repository.UnitRepository;
 import com.caiopfaltzgraff.lecaru.util.BrazilStates;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,40 @@ import java.util.List;
 public class UnitsService {
 
     private final UnitRepository unitRepository;
+
+    public List<Unit> findAll() {
+        return unitRepository.findAll();
+    }
+
+    public Unit findById(String id) {
+        return unitRepository.findById(id).orElseThrow(() -> new RuntimeException("Unit not found"));
+    }
+
+    public Unit save(Unit unit) {
+        return unitRepository.save(unit);
+    }
+
+    public void update(String unitId, UnitsSaveOrUpdateDTO dto) {
+        var unit = findById(unitId);
+
+        unit.setName(dto.name());
+        unit.setTelephone(dto.telephone());
+        unit.setAddress(new Address(
+            dto.zipCode(),
+            dto.street(),
+            dto.neighborhood(),
+            dto.city(),
+            dto.number(),
+            dto.fu()
+        ));
+
+        unitRepository.save(unit);
+    }
+
+    public void deleteById(String id) {
+        var unit = findById(id);
+        unitRepository.delete(unit);
+    }
 
     public List<StatePageUnitsDTO> getUnits() {
         var units = unitRepository.findAll();
@@ -55,5 +92,4 @@ public class UnitsService {
     private StateFullNameAndFuDTO getStateFullName(String fu) {
         return new StateFullNameAndFuDTO(BrazilStates.getStateFullName(fu.toUpperCase()), fu.toUpperCase());
     }
-
 }

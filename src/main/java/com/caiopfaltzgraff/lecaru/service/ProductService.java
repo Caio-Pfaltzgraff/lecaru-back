@@ -29,7 +29,7 @@ public class ProductService {
     }
 
     public void update(String id , ProductCreateDTO dto) {
-        var product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        var product = findById(id);
 
         product.setName(dto.name());
         product.setDescription(dto.description());
